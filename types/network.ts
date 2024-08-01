@@ -1,17 +1,6 @@
 export const ABI = [
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "initialOracleAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "knowledgeBaseCID",
-        "type": "string"
-      }
-    ],
+    "inputs": [],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -35,17 +24,17 @@ export const ABI = [
     "type": "event"
   },
   {
-    "anonymous": false,
-    "inputs": [
+    "inputs": [],
+    "name": "InferencePrecompile",
+    "outputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newOracleAddress",
+        "internalType": "contract IInference",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "OracleAddressUpdated",
-    "type": "event"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [
@@ -55,14 +44,14 @@ export const ABI = [
         "type": "string"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "runId",
-        "type": "uint256"
+        "type": "uint64"
       }
     ],
     "name": "addMessage",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -90,6 +79,13 @@ export const ABI = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "depositFunds",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -97,83 +93,61 @@ export const ABI = [
         "type": "uint256"
       }
     ],
-    "name": "getMessageHistory",
+    "name": "getMessageHistoryContents",
     "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "string",
-            "name": "role",
-            "type": "string"
-          },
-          {
-            "components": [
-              {
-                "internalType": "string",
-                "name": "contentType",
-                "type": "string"
-              },
-              {
-                "internalType": "string",
-                "name": "value",
-                "type": "string"
-              }
-            ],
-            "internalType": "struct IOracle.Content[]",
-            "name": "content",
-            "type": "tuple[]"
-          }
-        ],
-        "internalType": "struct IOracle.Message[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "knowledgeBase",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "runId",
-        "type": "uint256"
-      },
       {
         "internalType": "string[]",
-        "name": "documents",
-        "type": "string[]"
-      },
-      {
-        "internalType": "string",
         "name": "",
-        "type": "string"
+        "type": "string[]"
       }
     ],
-    "name": "onOracleKnowledgeBaseQueryResponse",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "runId",
+        "name": "chatId",
         "type": "uint256"
+      }
+    ],
+    "name": "getMessageHistoryRoles",
+    "outputs": [
+      {
+        "internalType": "string[]",
+        "name": "",
+        "type": "string[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "inferenceDeposit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "runId",
+        "type": "uint64"
       },
       {
         "internalType": "string",
@@ -186,33 +160,7 @@ export const ABI = [
         "type": "string"
       }
     ],
-    "name": "onOracleLlmResponse",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "oracleAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "newOracleAddress",
-        "type": "address"
-      }
-    ],
-    "name": "setOracleAddress",
+    "name": "onInferenceResponse",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -229,10 +177,17 @@ export const ABI = [
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "i",
         "type": "uint256"
       }
     ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawFunds",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   }

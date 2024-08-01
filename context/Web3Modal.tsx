@@ -6,27 +6,27 @@ import {createWeb3Modal, defaultConfig} from '@web3modal/ethers/react'
 const projectId = "f25128b8bcfc64fb5c124705aa9442b8"
 
 let mainnet = {
-  chainId: 696969,
+  chainId: 713715,
   name: 'Galadriel',
   currency: 'GAL',
   explorerUrl: 'https://explorer.galadriel.com',
-  rpcUrl: 'https://devnet.galadriel.com/'
+  rpcUrl: 'http://10.132.0.6:8545/'
 }
 if (process.env.NEXT_PUBLIC_NETWORK === "local") {
   mainnet = {
-    chainId: 1337,
+    chainId: 713715,
     name: 'Galadriel',
     currency: 'GAL',
     explorerUrl: 'https://explorer.galadriel.com',
-    rpcUrl: 'http://127.0.0.1:8545'
+    rpcUrl: 'http://127.0.0.1:8545/'
   }
 }
 
 
 // 3. Create modal
 const metadata = {
-  name: "VitAIlik",
-  description: "On-chain RPG game",
+  name: "ChatGPT",
+  description: "On-chain Chat GPT",
   // TODO:
   url: 'https://galadriel.com', // origin must match your domain & subdomain
   icons: []

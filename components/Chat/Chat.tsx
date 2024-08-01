@@ -3,7 +3,7 @@
 import {forwardRef, useCallback, useContext, useEffect, useImperativeHandle, useRef, useState} from 'react'
 import {Flex, Heading, IconButton, ScrollArea, Tooltip} from '@radix-ui/themes'
 import {useWeb3ModalProvider} from '@web3modal/ethers/react';
-import {BrowserProvider, Contract, ethers, TransactionReceipt} from "ethers";
+import {BrowserProvider, Contract, ethers, getBigInt, TransactionReceipt} from "ethers";
 import ContentEditable from 'react-contenteditable'
 import toast from 'react-hot-toast'
 import {AiOutlineClear, AiOutlineLoading3Quarters, AiOutlineUnorderedList} from 'react-icons/ai'
@@ -83,7 +83,7 @@ const Chat = (props: ChatProps, ref: any) => {
           let chatId
           if (conversation.current.length === 1) {
             // Start chat
-            const tx = await contract.startChat(input)
+            const tx = await contract.startChat(input, {value: calculateValue()})
             receipt = await tx.wait()
             chatId = getChatId(receipt, contract)
             if (chatId) {
@@ -92,7 +92,7 @@ const Chat = (props: ChatProps, ref: any) => {
 
           } else {
             chatId = currentChatRef?.current?.chatId
-            const transactionResponse = await contract.addMessage(input, currentChatRef?.current?.chatId)
+            const transactionResponse = await contract.addMessage(input, currentChatRef?.current?.chatId, {value: calculateValue()})
             receipt = await transactionResponse.wait()
           }
           setIsTxLoading(false)
@@ -146,6 +146,12 @@ const Chat = (props: ChatProps, ref: any) => {
     [currentChatRef, debug, isLoading]
   )
 
+  function calculateValue(): bigint {
+    // Hardcoded 1gwei gas price and 800k gas in contract
+    const callbackGasFees = ethers.parseUnits("1", "gwei") * getBigInt(800_000)
+    return ethers.parseEther("1") + callbackGasFees
+  }
+
   function getChatId(receipt: TransactionReceipt, contract: Contract) {
     let chatId
     for (const log of receipt.logs) {
@@ -168,14 +174,15 @@ const Chat = (props: ChatProps, ref: any) => {
     chatId: number,
     currentMessagesCount: number
   ): Promise<ChatMessage[]> {
-    const messages = await contract.getMessageHistory(chatId)
+    const messages = await contract.getMessageHistoryContents(chatId)
+    const roles = await contract.getMessageHistoryRoles(chatId)
 
     const newMessages: ChatMessage[] = []
     messages.forEach((message: any, i: number) => {
       if (i >= currentMessagesCount) {
         newMessages.push({
-          role: messages[i].role,
-          content: messages[i].content[0][1]
+          role: roles[i],
+          content: messages[i]
         })
       }
     })
