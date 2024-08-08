@@ -148,7 +148,7 @@ const Chat = (props: ChatProps, ref: any) => {
 
   function calculateValue(): bigint {
     // Hardcoded 1gwei gas price and 800k gas in contract
-    const callbackGasFees = ethers.parseUnits("1", "gwei") * getBigInt(800_000)
+    const callbackGasFees = ethers.parseUnits("1", "gwei") * getBigInt(2_000_000)
     return ethers.parseEther("1") + callbackGasFees
   }
 

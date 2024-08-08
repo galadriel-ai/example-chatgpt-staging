@@ -10,7 +10,7 @@ let mainnet = {
   name: 'Galadriel',
   currency: 'GAL',
   explorerUrl: 'https://explorer.galadriel.com',
-  rpcUrl: 'http://10.132.0.6:8545/'
+  rpcUrl: 'http://staging.galadriel.com/'
 }
 if (process.env.NEXT_PUBLIC_NETWORK === "local") {
   mainnet = {
