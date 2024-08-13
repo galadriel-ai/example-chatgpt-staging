@@ -93,31 +93,36 @@ export const ABI = [
         "type": "uint256"
       }
     ],
-    "name": "getMessageHistoryContents",
+    "name": "getMessageHistory",
     "outputs": [
       {
-        "internalType": "string[]",
+        "components": [
+          {
+            "internalType": "string",
+            "name": "role",
+            "type": "string"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "contentType",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "value",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct Galadriel.Content[]",
+            "name": "content",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct Galadriel.Message[]",
         "name": "",
-        "type": "string[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "chatId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getMessageHistoryRoles",
-    "outputs": [
-      {
-        "internalType": "string[]",
-        "name": "",
-        "type": "string[]"
+        "type": "tuple[]"
       }
     ],
     "stateMutability": "view",
@@ -156,7 +161,7 @@ export const ABI = [
       },
       {
         "internalType": "string",
-        "name": "",
+        "name": "errorMessage",
         "type": "string"
       }
     ],
